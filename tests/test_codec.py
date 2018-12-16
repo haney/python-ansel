@@ -1,9 +1,13 @@
-from ansel.codec import Codec
-import pytest
 import codecs
 
+import pytest
 
-class TestCodec(Codec):
+import ansel.codec
+
+from .conftest import EncodingError
+
+
+class Codec(ansel.codec.Codec):
     name = "test"
     encode_char_map = {"a": b"1", "b": b"23", "?": b"?"}
     decode_char_map = {b"a": "1", b"b": "23"}
@@ -11,23 +15,12 @@ class TestCodec(Codec):
     decode_modifier_map = {b"n": "5", b"o": "67"}
 
 
-class EncodingError(BaseException):
-    pass
-
-
-def error_handler_raises(exception):
-    raise EncodingError()
-
-
-codecs.register_error("raises", error_handler_raises)
-
-
 @pytest.mark.parametrize(
     "input, expected, expected_len",
     [("", b"", 0), ("a", b"1", 1), ("b", b"23", 1), ("ab", b"123", 2)],
 )
 def test_encode_valid(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.encode(input)
     assert expected == output
     assert expected_len == output_len
@@ -46,7 +39,7 @@ def test_encode_valid(input, expected, expected_len):
     ],
 )
 def test_encode_valid_with_modifiers(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.encode(input)
     assert expected == output
     assert expected_len == output_len
@@ -60,7 +53,7 @@ def test_encode_valid_with_modifiers(input, expected, expected_len):
     ],
 )
 def test_encode_invalid(input, start, end, reason):
-    codec = TestCodec()
+    codec = Codec()
     with pytest.raises(UnicodeEncodeError) as exc_info:
         codec.encode(input)
     assert "test" == exc_info.value.encoding
@@ -71,8 +64,8 @@ def test_encode_invalid(input, start, end, reason):
 
 
 @pytest.mark.parametrize("input", ["+"])
-def test_encode_invalid_raising_error_handler(input):
-    codec = TestCodec()
+def test_encode_invalid_raising_error_handler(error_handler, input):
+    codec = Codec()
     with pytest.raises(EncodingError):
         codec.encode(input, errors="raises")
 
@@ -82,7 +75,7 @@ def test_encode_invalid_raising_error_handler(input):
     [("+", b"?", 1), ("a+b", b"1?23", 3), ("a+n", b"15?", 3)],
 )
 def test_encode_invalid_with_replacement(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.encode(input, errors="replace")
     assert expected == output
     assert expected_len == output_len
@@ -93,7 +86,7 @@ def test_encode_invalid_with_replacement(input, expected, expected_len):
     [(b"", "", 0), (b"a", "1", 1), (b"b", "23", 1), (b"ab", "123", 2)],
 )
 def test_decode_valid(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.decode(input)
     assert expected == output
     assert expected_len == output_len
@@ -112,7 +105,7 @@ def test_decode_valid(input, expected, expected_len):
     ],
 )
 def test_decode_valid_with_modifiers(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.decode(input)
     assert expected == output
     assert expected_len == output_len
@@ -126,7 +119,7 @@ def test_decode_valid_with_modifiers(input, expected, expected_len):
     ],
 )
 def test_decode_invalid(input, start, end, reason):
-    codec = TestCodec()
+    codec = Codec()
     with pytest.raises(UnicodeDecodeError) as exc_info:
         codec.decode(input)
     assert "test" == exc_info.value.encoding
@@ -137,8 +130,8 @@ def test_decode_invalid(input, start, end, reason):
 
 
 @pytest.mark.parametrize("input", [b"+"])
-def test_decode_invalid_raising_error_handler(input):
-    codec = TestCodec()
+def test_decode_invalid_raising_error_handler(error_handler, input):
+    codec = Codec()
     with pytest.raises(EncodingError):
         codec.decode(input, errors="raises")
 
@@ -148,7 +141,7 @@ def test_decode_invalid_raising_error_handler(input):
     [(b"+", "\uFFFD", 1), (b"a+b", "1\uFFFD23", 3), (b"an+", "1\uFFFD5", 3)],
 )
 def test_decode_invalid_with_replacement(input, expected, expected_len):
-    codec = TestCodec()
+    codec = Codec()
     output, output_len = codec.decode(input, errors="replace")
     assert expected == output
     assert expected_len == output_len
