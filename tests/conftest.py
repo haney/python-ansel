@@ -2,6 +2,8 @@ import codecs
 
 import pytest
 
+import ansel
+
 
 class EncodingError(BaseException):
     pass
@@ -13,3 +15,8 @@ def error_handler():
         raise EncodingError()
 
     codecs.register_error("raises", error_handler_raises)
+
+
+@pytest.fixture(scope="session")
+def register():
+    ansel.register()
