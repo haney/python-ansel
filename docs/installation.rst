@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/haney/ansel
+    $ git clone git://github.com/haney/python-ansel
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/haney/ansel/tarball/master
+    $ curl  -OL https://github.com/haney/python-ansel/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/haney/ansel
-.. _tarball: https://github.com/haney/ansel/tarball/master
+.. _Github repo: https://github.com/haney/python-ansel
+.. _tarball: https://github.com/haney/python-ansel/tarball/master
