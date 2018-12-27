@@ -7,9 +7,9 @@ ANSEL Codecs
         :target: https://pypi.python.org/pypi/ansel
 
 .. image:: https://img.shields.io/travis/haney/ansel.svg
-        :target: https://travis-ci.org/haney/ansel
+        :target: https://travis-ci.org/haney/python-ansel
 
-.. image:: https://readthedocs.org/projects/ansel/badge/?version=latest
+.. image:: https://readthedocs.org/projects/python-ansel/badge/?version=latest
         :target: https://ansel.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
