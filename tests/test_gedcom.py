@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `ansel` package."""
+"""Tests for `gedcom` package."""
 
 import codecs
 
@@ -9,9 +9,9 @@ import pytest
 
 
 def test_lookup(register):
-    codec_info = codecs.lookup("ansel")
+    codec_info = codecs.lookup("gedcom")
     assert codec_info is not None
-    assert "ansel" == codec_info.name
+    assert "gedcom" == codec_info.name
 
 
 @pytest.mark.parametrize(
@@ -26,12 +26,17 @@ def test_lookup(register):
                 reason="Incremental reads not supported through stream interface"
             ),
         ),
+        (b"\xBE", u"\u25A1"),
+        (b"\xBF", u"\u25A0"),
+        (b"\xCD", u"\u0065"),
+        (b"\xCE", u"\u006F"),
+        (b"\xCF", u"\u00DF"),
     ],
 )
 def test_decode(register, fs, input, expected):
-    fs.create_file("text.ansel", contents=input)
+    fs.create_file("text.gedcom", contents=input)
 
-    with codecs.open("text.ansel", "r", encoding="ansel") as reader:
+    with codecs.open("text.gedcom", "r", encoding="gedcom") as reader:
         contents = []
         char = reader.read(1)
         while char:
@@ -55,14 +60,19 @@ def test_decode(register, fs, input, expected):
                 reason="Incremental writes not supported through stream interface"
             ),
         ),
+        (u"\u25A1", b"\xBE"),
+        (u"\u25A0", b"\xBF"),
+        (u"\u0065", b"\x65"),
+        (u"\u006F", b"\x6F"),
+        (u"\u00DF", b"\xCF"),
     ],
 )
 def test_encode(register, fs, input_parts, expected):
-    with codecs.open("text.ansel", "w", encoding="ansel") as writer:
+    with codecs.open("text.gedcom", "w", encoding="gedcom") as writer:
         for part in input_parts:
             writer.write(part)
 
-    with codecs.open("text.ansel", "rb") as reader:
+    with codecs.open("text.gedcom", "rb") as reader:
         contents = reader.read()
 
     assert expected == contents
