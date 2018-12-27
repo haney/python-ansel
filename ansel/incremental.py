@@ -1,5 +1,7 @@
 import codecs
 
+import six
+
 
 class IncrementalDecoder(codecs.IncrementalDecoder):
     name = None
@@ -7,7 +9,7 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
     decode_modifier_map = {}
 
     def __init__(self, errors="strict"):
-        super().__init__(errors)
+        super(IncrementalDecoder, self).__init__(errors)
         self.decoded_modifiers = []
 
     def getstate(self):
@@ -33,15 +35,15 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
     def decode(self, input, final=False):
         error_handler = codecs.lookup_error(self.errors)
         decoded_chars = []
-        for index, item in enumerate(input):
+        for index, item in enumerate(six.iterbytes(input)):
             try:
-                decoded_item = self.decode_char_map[bytes([item])]
+                decoded_item = self.decode_char_map[six.int2byte(item)]
                 decoded_chars.append(decoded_item)
                 decoded_chars += self.decoded_modifiers
-                self.decoded_modifiers.clear()
+                self.decoded_modifiers = []
             except KeyError:
                 try:
-                    decoded_item = self.decode_modifier_map[bytes([item])]
+                    decoded_item = self.decode_modifier_map[six.int2byte(item)]
                     self.decoded_modifiers.insert(0, decoded_item)
                 except KeyError:
                     decoded_item, _ = error_handler(
@@ -55,11 +57,11 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
                     )
                     decoded_chars.append(decoded_item)
                     decoded_chars += self.decoded_modifiers
-                    self.decoded_modifiers.clear()
+                    self.decoded_modifiers = []
 
         if final:
             decoded_chars += self.decoded_modifiers
-            self.decoded_modifiers.clear()
+            self.decoded_modifiers = []
 
         return "".join(decoded_chars)
 
@@ -70,7 +72,7 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
     encode_modifier_map = {}
 
     def __init__(self, errors="strict"):
-        super().__init__(errors)
+        super(IncrementalEncoder, self).__init__(errors)
         self.current_char = []
 
     def getstate(self):
@@ -78,7 +80,7 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
             return 0
         state = 1
         for item in self.current_char:
-            for byte in item:
+            for byte in six.iterbytes(item):
                 state <<= 8
                 state += byte
         return state
@@ -88,14 +90,13 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
         while state > 1:
             byte = state & 0xFF
             state >>= 8
-            current_char.append(bytes([byte]))
+            current_char.append(six.int2byte(byte))
         current_char.reverse()
         self.current_char = current_char
 
     def encode(self, input, final=False):
         error_handler = codecs.lookup_error(self.errors)
         encoded_chars = []
-        current_char = []
         for index, item in enumerate(input):
             try:
                 encoded_item = self.encode_char_map[item]

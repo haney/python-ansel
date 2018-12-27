@@ -1,7 +1,6 @@
 import codecs
-import ansel.codec
-import ansel.incremental
 
+from .. import codec, incremental
 
 GEDCOM_TO_UNICODE = {
     b"\x00": u"\u0000",  # NULL CHARACTER
@@ -831,7 +830,8 @@ UNICODE_TO_GEDCOM_MODIFIERS = {
     u"\uFE23": b"\xFB",  # COMBINING DOUBLE TILDE RIGHT HALF
 }
 
-class Codec(ansel.codec.Codec):
+
+class Codec(codec.Codec):
     name = "gedcom"
     encode_char_map = UNICODE_TO_GEDCOM
     encode_modifier_map = UNICODE_TO_GEDCOM_MODIFIERS
@@ -839,13 +839,13 @@ class Codec(ansel.codec.Codec):
     decode_modifier_map = GEDCOM_TO_UNICODE_MODIFIERS
 
 
-class IncrementalDecoder(ansel.incremental.IncrementalDecoder):
+class IncrementalDecoder(incremental.IncrementalDecoder):
     name = "gedcom"
     decode_char_map = GEDCOM_TO_UNICODE
     decode_modifier_map = GEDCOM_TO_UNICODE_MODIFIERS
 
 
-class IncrementalEncoder(ansel.incremental.IncrementalEncoder):
+class IncrementalEncoder(incremental.IncrementalEncoder):
     name = "gedcom"
     encode_char_map = UNICODE_TO_GEDCOM
     encode_modifier_map = UNICODE_TO_GEDCOM_MODIFIERS
@@ -861,7 +861,7 @@ class StreamWriter(Codec, codecs.StreamWriter):
 
 def getregentry():
     return codecs.CodecInfo(
-        name='gedcom',
+        name="gedcom",
         encode=Codec().encode,
         decode=Codec().decode,
         incrementalencoder=IncrementalEncoder,
@@ -869,4 +869,3 @@ def getregentry():
         streamreader=StreamReader,
         streamwriter=StreamWriter,
     )
-

@@ -1,7 +1,6 @@
 import codecs
-import ansel.codec
-import ansel.incremental
 
+from .. import codec, incremental
 
 ANSEL_TO_UNICODE = {
     b"\x00": u"\u0000",  # NULL CHARACTER
@@ -819,7 +818,7 @@ UNICODE_TO_ANSEL_MODIFIERS = {
 }
 
 
-class Codec(ansel.codec.Codec):
+class Codec(codec.Codec):
     name = "ansel"
     encode_char_map = UNICODE_TO_ANSEL
     encode_modifier_map = UNICODE_TO_ANSEL_MODIFIERS
@@ -827,13 +826,13 @@ class Codec(ansel.codec.Codec):
     decode_modifier_map = ANSEL_TO_UNICODE_MODIFIERS
 
 
-class IncrementalDecoder(ansel.incremental.IncrementalDecoder):
+class IncrementalDecoder(incremental.IncrementalDecoder):
     name = "ansel"
     decode_char_map = ANSEL_TO_UNICODE
     decode_modifier_map = ANSEL_TO_UNICODE_MODIFIERS
 
 
-class IncrementalEncoder(ansel.incremental.IncrementalEncoder):
+class IncrementalEncoder(incremental.IncrementalEncoder):
     name = "ansel"
     encode_char_map = UNICODE_TO_ANSEL
     encode_modifier_map = UNICODE_TO_ANSEL_MODIFIERS
@@ -857,4 +856,3 @@ def getregentry():
         streamreader=StreamReader,
         streamwriter=StreamWriter,
     )
-
