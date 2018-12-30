@@ -1,5 +1,5 @@
 Welcome to ANSEL Codecs's documentation!
-======================================
+========================================
 
 .. toctree::
    :maxdepth: 2
@@ -8,7 +8,6 @@ Welcome to ANSEL Codecs's documentation!
    readme
    installation
    usage
-   modules
    contributing
    authors
    history

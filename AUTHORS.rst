@@ -5,9 +5,11 @@ Credits
 Development Lead
 ----------------
 
-* David Haney <david.haney@gmail.com>
+* David Haney (`@haney`_)
 
 Contributors
 ------------
 
 None yet. Why not be the first?
+
+.. _@haney: https://github.com/haney
