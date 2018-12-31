@@ -40,7 +40,7 @@ setup(
     include_package_data=True,
     keywords="ansel gedcom",
     name="ansel",
-    packages=find_packages(include=["ansel"]),
+    packages=find_packages(include=["ansel", "ansel.*"]),
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
