@@ -6,18 +6,16 @@ from .. import codec, incremental
 GEDCOM_TO_UNICODE = ansel.ANSEL_TO_UNICODE.copy()
 GEDCOM_TO_UNICODE.update(
     {
-        b"\xBE": u"\u25A1",  # WHITE SQUARE
-        b"\xBF": u"\u25A0",  # BLACK SQUARE
-        b"\xCD": u"\u0065",  # LATIN SMALL LETTER E
-        b"\xCE": u"\u006F",  # LATIN SMALL LETTER O
-        b"\xCF": u"\u00DF",  # LATIN SMALL LETTER SHARP S
+        0xBE: u"\u25A1",  # WHITE SQUARE
+        0xBF: u"\u25A0",  # BLACK SQUARE
+        0xCD: u"\u0065",  # LATIN SMALL LETTER E
+        0xCE: u"\u006F",  # LATIN SMALL LETTER O
+        0xCF: u"\u00DF",  # LATIN SMALL LETTER SHARP S
     }
 )
 
 GEDCOM_TO_UNICODE_MODIFIERS = ansel.ANSEL_TO_UNICODE_MODIFIERS.copy()
-GEDCOM_TO_UNICODE_MODIFIERS.update(
-    {b"\xFC": u"\u0338"}  # COMBINING LONG SOLIDUS OVERLAY
-)
+GEDCOM_TO_UNICODE_MODIFIERS.update({0xFC: u"\u0338"})  # COMBINING LONG SOLIDUS OVERLAY
 
 UNICODE_TO_GEDCOM = ansel.UNICODE_TO_ANSEL.copy()
 UNICODE_TO_GEDCOM.update(

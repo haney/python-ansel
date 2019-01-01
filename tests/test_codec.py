@@ -8,9 +8,9 @@ from .conftest import EncodingError
 class Codec(ansel.codec.Codec):
     name = "test"
     encode_char_map = {u"a": b"1", u"b": b"23", u"?": b"?"}
-    decode_char_map = {b"a": u"1", b"b": u"23"}
+    decode_char_map = {ord(b"a"): u"1", ord(b"b"): u"23"}
     encode_modifier_map = {u"n": b"5", u"o": b"67"}
-    decode_modifier_map = {b"n": u"5", b"o": u"67"}
+    decode_modifier_map = {ord(b"n"): u"5", ord(b"o"): u"67"}
 
 
 @pytest.mark.parametrize(
