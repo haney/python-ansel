@@ -3,200 +3,200 @@ import codecs
 from .. import codec, incremental
 
 ANSEL_TO_UNICODE = {
-    b"\x00": u"\u0000",  # NULL CHARACTER
-    b"\x01": u"\u0001",  # START OF HEADING
-    b"\x02": u"\u0002",  # START OF TEXT
-    b"\x03": u"\u0003",  # END-OF-TEXT CHARACTER
-    b"\x04": u"\u0004",  # END-OF-TRANSMISSION CHARACTER
-    b"\x05": u"\u0005",  # ENQUIRY CHARACTER
-    b"\x06": u"\u0006",  # ACKNOWLEDGE CHARACTER
-    b"\x07": u"\u0007",  # BELL CHARACTER
-    b"\x08": u"\u0008",  # BACKSPACE
-    b"\x09": u"\u0009",  # HORIZONTAL TAB
-    b"\x0A": u"\u000A",  # LINE FEED
-    b"\x0B": u"\u000B",  # VERTICAL TAB
-    b"\x0C": u"\u000C",  # FORM FEED
-    b"\x0D": u"\u000D",  # CARRIAGE RETURN
-    b"\x0E": u"\u000E",  # SHIFT OUT
-    b"\x0F": u"\u000F",  # SHIFT IN
-    b"\x10": u"\u0010",  # DATA LINK ESCAPE
-    b"\x11": u"\u0011",  # DEVICE CONTROL 1
-    b"\x12": u"\u0012",  # DEVICE CONTROL 2
-    b"\x13": u"\u0013",  # DEVICE CONTROL 3
-    b"\x14": u"\u0014",  # DEVICE CONTROL 4
-    b"\x15": u"\u0015",  # NEGATIVE-ACKNOWLEDGE CHARACTER
-    b"\x16": u"\u0016",  # SYNCHRONOUS IDLE
-    b"\x17": u"\u0017",  # END OF TRANSMISSION BLOCK
-    b"\x18": u"\u0018",  # CANCEL CHARACTER
-    b"\x19": u"\u0019",  # END OF MEDIUM
-    b"\x1A": u"\u001A",  # SUBSTITUTE CHARACTER
-    b"\x1B": u"\u001B",  # ESCAPE CHARACTER
-    b"\x1C": u"\u001C",  # FILE SEPARATOR
-    b"\x1D": u"\u001D",  # GROUP SEPARATOR
-    b"\x1E": u"\u001E",  # RECORD SEPARATOR
-    b"\x1F": u"\u001F",  # UNIT SEPARATOR
-    b"\x20": u"\u0020",  # SPACE
-    b"\x21": u"\u0021",  # EXCLAMATION MARK
-    b"\x22": u"\u0022",  # QUOTATION MARK
-    b"\x23": u"\u0023",  # NUMBER SIGN
-    b"\x24": u"\u0024",  # DOLLAR SIGN
-    b"\x25": u"\u0025",  # PERCENT SIGN
-    b"\x26": u"\u0026",  # AMPERSAND
-    b"\x27": u"\u0027",  # APOSTROPHE
-    b"\x28": u"\u0028",  # LEFT PARENTHESIS
-    b"\x29": u"\u0029",  # RIGHT PARENTHESIS
-    b"\x2A": u"\u002A",  # ASTERISK
-    b"\x2B": u"\u002B",  # PLUS SIGN
-    b"\x2C": u"\u002C",  # COMMA
-    b"\x2D": u"\u002D",  # HYPHEN-MINUS
-    b"\x2E": u"\u002E",  # FULL STOP
-    b"\x2F": u"\u002F",  # SOLIDUS
-    b"\x30": u"\u0030",  # DIGIT ZERO
-    b"\x31": u"\u0031",  # DIGIT ONE
-    b"\x32": u"\u0032",  # DIGIT TWO
-    b"\x33": u"\u0033",  # DIGIT THREE
-    b"\x34": u"\u0034",  # DIGIT FOUR
-    b"\x35": u"\u0035",  # DIGIT FIVE
-    b"\x36": u"\u0036",  # DIGIT SIX
-    b"\x37": u"\u0037",  # DIGIT SEVEN
-    b"\x38": u"\u0038",  # DIGIT EIGHT
-    b"\x39": u"\u0039",  # DIGIT NINE
-    b"\x3A": u"\u003A",  # COLON
-    b"\x3B": u"\u003B",  # SEMICOLON
-    b"\x3C": u"\u003C",  # LESS-THAN SIGN
-    b"\x3D": u"\u003D",  # EQUALS SIGN
-    b"\x3E": u"\u003E",  # GREATER-THAN SIGN
-    b"\x3F": u"\u003F",  # QUESTION MARK
-    b"\x40": u"\u0040",  # COMMERCIAL AT
-    b"\x41": u"\u0041",  # LATIN CAPITAL LETTER A
-    b"\x42": u"\u0042",  # LATIN CAPITAL LETTER B
-    b"\x43": u"\u0043",  # LATIN CAPITAL LETTER C
-    b"\x44": u"\u0044",  # LATIN CAPITAL LETTER D
-    b"\x45": u"\u0045",  # LATIN CAPITAL LETTER E
-    b"\x46": u"\u0046",  # LATIN CAPITAL LETTER F
-    b"\x47": u"\u0047",  # LATIN CAPITAL LETTER G
-    b"\x48": u"\u0048",  # LATIN CAPITAL LETTER H
-    b"\x49": u"\u0049",  # LATIN CAPITAL LETTER I
-    b"\x4A": u"\u004A",  # LATIN CAPITAL LETTER J
-    b"\x4B": u"\u004B",  # LATIN CAPITAL LETTER K
-    b"\x4C": u"\u004C",  # LATIN CAPITAL LETTER L
-    b"\x4D": u"\u004D",  # LATIN CAPITAL LETTER M
-    b"\x4E": u"\u004E",  # LATIN CAPITAL LETTER N
-    b"\x4F": u"\u004F",  # LATIN CAPITAL LETTER O
-    b"\x50": u"\u0050",  # LATIN CAPITAL LETTER P
-    b"\x51": u"\u0051",  # LATIN CAPITAL LETTER Q
-    b"\x52": u"\u0052",  # LATIN CAPITAL LETTER R
-    b"\x53": u"\u0053",  # LATIN CAPITAL LETTER S
-    b"\x54": u"\u0054",  # LATIN CAPITAL LETTER T
-    b"\x55": u"\u0055",  # LATIN CAPITAL LETTER U
-    b"\x56": u"\u0056",  # LATIN CAPITAL LETTER V
-    b"\x57": u"\u0057",  # LATIN CAPITAL LETTER W
-    b"\x58": u"\u0058",  # LATIN CAPITAL LETTER X
-    b"\x59": u"\u0059",  # LATIN CAPITAL LETTER Y
-    b"\x5A": u"\u005A",  # LATIN CAPITAL LETTER Z
-    b"\x5B": u"\u005B",  # LEFT SQUARE BRACKET
-    b"\x5C": u"\u005C",  # REVERSE SOLIDUS
-    b"\x5D": u"\u005D",  # RIGHT SQUARE BRACKET
-    b"\x5E": u"\u005E",  # CIRCUMFLEX ACCENT
-    b"\x5F": u"\u005F",  # LOW LINE
-    b"\x60": u"\u0060",  # GRAVE ACCENT
-    b"\x61": u"\u0061",  # LATIN SMALL LETTER A
-    b"\x62": u"\u0062",  # LATIN SMALL LETTER B
-    b"\x63": u"\u0063",  # LATIN SMALL LETTER C
-    b"\x64": u"\u0064",  # LATIN SMALL LETTER D
-    b"\x65": u"\u0065",  # LATIN SMALL LETTER E
-    b"\x66": u"\u0066",  # LATIN SMALL LETTER F
-    b"\x67": u"\u0067",  # LATIN SMALL LETTER G
-    b"\x68": u"\u0068",  # LATIN SMALL LETTER H
-    b"\x69": u"\u0069",  # LATIN SMALL LETTER I
-    b"\x6A": u"\u006A",  # LATIN SMALL LETTER J
-    b"\x6B": u"\u006B",  # LATIN SMALL LETTER K
-    b"\x6C": u"\u006C",  # LATIN SMALL LETTER L
-    b"\x6D": u"\u006D",  # LATIN SMALL LETTER M
-    b"\x6E": u"\u006E",  # LATIN SMALL LETTER N
-    b"\x6F": u"\u006F",  # LATIN SMALL LETTER O
-    b"\x70": u"\u0070",  # LATIN SMALL LETTER P
-    b"\x71": u"\u0071",  # LATIN SMALL LETTER Q
-    b"\x72": u"\u0072",  # LATIN SMALL LETTER R
-    b"\x73": u"\u0073",  # LATIN SMALL LETTER S
-    b"\x74": u"\u0074",  # LATIN SMALL LETTER T
-    b"\x75": u"\u0075",  # LATIN SMALL LETTER U
-    b"\x76": u"\u0076",  # LATIN SMALL LETTER V
-    b"\x77": u"\u0077",  # LATIN SMALL LETTER W
-    b"\x78": u"\u0078",  # LATIN SMALL LETTER X
-    b"\x79": u"\u0079",  # LATIN SMALL LETTER Y
-    b"\x7A": u"\u007A",  # LATIN SMALL LETTER Z
-    b"\x7B": u"\u007B",  # LEFT CURLY BRACKET
-    b"\x7C": u"\u007C",  # VERTICAL LINE
-    b"\x7D": u"\u007D",  # RIGHT CURLY BRACKET
-    b"\x7E": u"\u007E",  # TILDE
-    b"\x7F": u"\u007F",  # DELETE
-    b"\xA1": u"\u0141",  # LATIN CAPITAL LETTER L WITH STROKE
-    b"\xA2": u"\u00D8",  # LATIN CAPITAL LETTER O WITH STROKE
-    b"\xA3": u"\u0110",  # LATIN CAPITAL LETTER D WITH STROKE
-    b"\xA4": u"\u00DE",  # LATIN CAPITAL LETTER THORN
-    b"\xA5": u"\u00C6",  # LATIN CAPITAL LETTER AE
-    b"\xA6": u"\u0152",  # LATIN CAPITAL LIGATURE OE
-    b"\xA7": u"\u02B9",  # MODIFIER LETTER PRIME
-    b"\xA8": u"\u00B7",  # MIDDLE DOT
-    b"\xA9": u"\u266D",  # MUSIC FLAT SIGN
-    b"\xAA": u"\u00AE",  # REGISTERED SIGN
-    b"\xAB": u"\u00B1",  # PLUS-MINUS SIGN
-    b"\xAC": u"\u01A0",  # LATIN CAPITAL LETTER O WITH HORN
-    b"\xAD": u"\u01AF",  # LATIN CAPITAL LETTER U WITH HORN
-    b"\xAE": u"\u02BC",  # MODIFIER LETTER APOSTROPHE
-    b"\xB0": u"\u02BB",  # MODIFIER LETTER TURNED COMMA
-    b"\xB1": u"\u0142",  # LATIN SMALL LETTER L WITH STROKE
-    b"\xB2": u"\u00F8",  # LATIN SMALL LETTER O WITH STROKE
-    b"\xB3": u"\u0111",  # LATIN SMALL LETTER D WITH STROKE
-    b"\xB4": u"\u00FE",  # LATIN SMALL LETTER THORN
-    b"\xB5": u"\u00E6",  # LATIN SMALL LETTER AE
-    b"\xB6": u"\u0153",  # LATIN SMALL LIGATURE OE
-    b"\xB7": u"\u02BA",  # MODIFIER LETTER DOUBLE PRIME
-    b"\xB8": u"\u0131",  # LATIN SMALL LETTER DOTLESS I
-    b"\xB9": u"\u00A3",  # POUND SIGN
-    b"\xBA": u"\u00F0",  # LATIN SMALL LETTER ETH
-    b"\xBC": u"\u01A1",  # LATIN SMALL LETTER O WITH HORN
-    b"\xBD": u"\u01B0",  # LATIN SMALL LETTER U WITH HORN
-    b"\xC0": u"\u00B0",  # DEGREE SIGN
-    b"\xC1": u"\u2113",  # SCRIPT SMALL L
-    b"\xC2": u"\u2117",  # SOUND RECORDING COPYRIGHT
-    b"\xC3": u"\u00A9",  # COPYRIGHT SIGN
-    b"\xC4": u"\u266F",  # MUSIC SHARP SIGN
-    b"\xC5": u"\u00BF",  # INVERTED QUESTION MARK
-    b"\xC6": u"\u00A1",  # INVERTED EXCLAMATION MARK
+    0x00: u"\u0000",  # NULL CHARACTER
+    0x01: u"\u0001",  # START OF HEADING
+    0x02: u"\u0002",  # START OF TEXT
+    0x03: u"\u0003",  # END-OF-TEXT CHARACTER
+    0x04: u"\u0004",  # END-OF-TRANSMISSION CHARACTER
+    0x05: u"\u0005",  # ENQUIRY CHARACTER
+    0x06: u"\u0006",  # ACKNOWLEDGE CHARACTER
+    0x07: u"\u0007",  # BELL CHARACTER
+    0x08: u"\u0008",  # BACKSPACE
+    0x09: u"\u0009",  # HORIZONTAL TAB
+    0x0A: u"\u000A",  # LINE FEED
+    0x0B: u"\u000B",  # VERTICAL TAB
+    0x0C: u"\u000C",  # FORM FEED
+    0x0D: u"\u000D",  # CARRIAGE RETURN
+    0x0E: u"\u000E",  # SHIFT OUT
+    0x0F: u"\u000F",  # SHIFT IN
+    0x10: u"\u0010",  # DATA LINK ESCAPE
+    0x11: u"\u0011",  # DEVICE CONTROL 1
+    0x12: u"\u0012",  # DEVICE CONTROL 2
+    0x13: u"\u0013",  # DEVICE CONTROL 3
+    0x14: u"\u0014",  # DEVICE CONTROL 4
+    0x15: u"\u0015",  # NEGATIVE-ACKNOWLEDGE CHARACTER
+    0x16: u"\u0016",  # SYNCHRONOUS IDLE
+    0x17: u"\u0017",  # END OF TRANSMISSION BLOCK
+    0x18: u"\u0018",  # CANCEL CHARACTER
+    0x19: u"\u0019",  # END OF MEDIUM
+    0x1A: u"\u001A",  # SUBSTITUTE CHARACTER
+    0x1B: u"\u001B",  # ESCAPE CHARACTER
+    0x1C: u"\u001C",  # FILE SEPARATOR
+    0x1D: u"\u001D",  # GROUP SEPARATOR
+    0x1E: u"\u001E",  # RECORD SEPARATOR
+    0x1F: u"\u001F",  # UNIT SEPARATOR
+    0x20: u"\u0020",  # SPACE
+    0x21: u"\u0021",  # EXCLAMATION MARK
+    0x22: u"\u0022",  # QUOTATION MARK
+    0x23: u"\u0023",  # NUMBER SIGN
+    0x24: u"\u0024",  # DOLLAR SIGN
+    0x25: u"\u0025",  # PERCENT SIGN
+    0x26: u"\u0026",  # AMPERSAND
+    0x27: u"\u0027",  # APOSTROPHE
+    0x28: u"\u0028",  # LEFT PARENTHESIS
+    0x29: u"\u0029",  # RIGHT PARENTHESIS
+    0x2A: u"\u002A",  # ASTERISK
+    0x2B: u"\u002B",  # PLUS SIGN
+    0x2C: u"\u002C",  # COMMA
+    0x2D: u"\u002D",  # HYPHEN-MINUS
+    0x2E: u"\u002E",  # FULL STOP
+    0x2F: u"\u002F",  # SOLIDUS
+    0x30: u"\u0030",  # DIGIT ZERO
+    0x31: u"\u0031",  # DIGIT ONE
+    0x32: u"\u0032",  # DIGIT TWO
+    0x33: u"\u0033",  # DIGIT THREE
+    0x34: u"\u0034",  # DIGIT FOUR
+    0x35: u"\u0035",  # DIGIT FIVE
+    0x36: u"\u0036",  # DIGIT SIX
+    0x37: u"\u0037",  # DIGIT SEVEN
+    0x38: u"\u0038",  # DIGIT EIGHT
+    0x39: u"\u0039",  # DIGIT NINE
+    0x3A: u"\u003A",  # COLON
+    0x3B: u"\u003B",  # SEMICOLON
+    0x3C: u"\u003C",  # LESS-THAN SIGN
+    0x3D: u"\u003D",  # EQUALS SIGN
+    0x3E: u"\u003E",  # GREATER-THAN SIGN
+    0x3F: u"\u003F",  # QUESTION MARK
+    0x40: u"\u0040",  # COMMERCIAL AT
+    0x41: u"\u0041",  # LATIN CAPITAL LETTER A
+    0x42: u"\u0042",  # LATIN CAPITAL LETTER B
+    0x43: u"\u0043",  # LATIN CAPITAL LETTER C
+    0x44: u"\u0044",  # LATIN CAPITAL LETTER D
+    0x45: u"\u0045",  # LATIN CAPITAL LETTER E
+    0x46: u"\u0046",  # LATIN CAPITAL LETTER F
+    0x47: u"\u0047",  # LATIN CAPITAL LETTER G
+    0x48: u"\u0048",  # LATIN CAPITAL LETTER H
+    0x49: u"\u0049",  # LATIN CAPITAL LETTER I
+    0x4A: u"\u004A",  # LATIN CAPITAL LETTER J
+    0x4B: u"\u004B",  # LATIN CAPITAL LETTER K
+    0x4C: u"\u004C",  # LATIN CAPITAL LETTER L
+    0x4D: u"\u004D",  # LATIN CAPITAL LETTER M
+    0x4E: u"\u004E",  # LATIN CAPITAL LETTER N
+    0x4F: u"\u004F",  # LATIN CAPITAL LETTER O
+    0x50: u"\u0050",  # LATIN CAPITAL LETTER P
+    0x51: u"\u0051",  # LATIN CAPITAL LETTER Q
+    0x52: u"\u0052",  # LATIN CAPITAL LETTER R
+    0x53: u"\u0053",  # LATIN CAPITAL LETTER S
+    0x54: u"\u0054",  # LATIN CAPITAL LETTER T
+    0x55: u"\u0055",  # LATIN CAPITAL LETTER U
+    0x56: u"\u0056",  # LATIN CAPITAL LETTER V
+    0x57: u"\u0057",  # LATIN CAPITAL LETTER W
+    0x58: u"\u0058",  # LATIN CAPITAL LETTER X
+    0x59: u"\u0059",  # LATIN CAPITAL LETTER Y
+    0x5A: u"\u005A",  # LATIN CAPITAL LETTER Z
+    0x5B: u"\u005B",  # LEFT SQUARE BRACKET
+    0x5C: u"\u005C",  # REVERSE SOLIDUS
+    0x5D: u"\u005D",  # RIGHT SQUARE BRACKET
+    0x5E: u"\u005E",  # CIRCUMFLEX ACCENT
+    0x5F: u"\u005F",  # LOW LINE
+    0x60: u"\u0060",  # GRAVE ACCENT
+    0x61: u"\u0061",  # LATIN SMALL LETTER A
+    0x62: u"\u0062",  # LATIN SMALL LETTER B
+    0x63: u"\u0063",  # LATIN SMALL LETTER C
+    0x64: u"\u0064",  # LATIN SMALL LETTER D
+    0x65: u"\u0065",  # LATIN SMALL LETTER E
+    0x66: u"\u0066",  # LATIN SMALL LETTER F
+    0x67: u"\u0067",  # LATIN SMALL LETTER G
+    0x68: u"\u0068",  # LATIN SMALL LETTER H
+    0x69: u"\u0069",  # LATIN SMALL LETTER I
+    0x6A: u"\u006A",  # LATIN SMALL LETTER J
+    0x6B: u"\u006B",  # LATIN SMALL LETTER K
+    0x6C: u"\u006C",  # LATIN SMALL LETTER L
+    0x6D: u"\u006D",  # LATIN SMALL LETTER M
+    0x6E: u"\u006E",  # LATIN SMALL LETTER N
+    0x6F: u"\u006F",  # LATIN SMALL LETTER O
+    0x70: u"\u0070",  # LATIN SMALL LETTER P
+    0x71: u"\u0071",  # LATIN SMALL LETTER Q
+    0x72: u"\u0072",  # LATIN SMALL LETTER R
+    0x73: u"\u0073",  # LATIN SMALL LETTER S
+    0x74: u"\u0074",  # LATIN SMALL LETTER T
+    0x75: u"\u0075",  # LATIN SMALL LETTER U
+    0x76: u"\u0076",  # LATIN SMALL LETTER V
+    0x77: u"\u0077",  # LATIN SMALL LETTER W
+    0x78: u"\u0078",  # LATIN SMALL LETTER X
+    0x79: u"\u0079",  # LATIN SMALL LETTER Y
+    0x7A: u"\u007A",  # LATIN SMALL LETTER Z
+    0x7B: u"\u007B",  # LEFT CURLY BRACKET
+    0x7C: u"\u007C",  # VERTICAL LINE
+    0x7D: u"\u007D",  # RIGHT CURLY BRACKET
+    0x7E: u"\u007E",  # TILDE
+    0x7F: u"\u007F",  # DELETE
+    0xA1: u"\u0141",  # LATIN CAPITAL LETTER L WITH STROKE
+    0xA2: u"\u00D8",  # LATIN CAPITAL LETTER O WITH STROKE
+    0xA3: u"\u0110",  # LATIN CAPITAL LETTER D WITH STROKE
+    0xA4: u"\u00DE",  # LATIN CAPITAL LETTER THORN
+    0xA5: u"\u00C6",  # LATIN CAPITAL LETTER AE
+    0xA6: u"\u0152",  # LATIN CAPITAL LIGATURE OE
+    0xA7: u"\u02B9",  # MODIFIER LETTER PRIME
+    0xA8: u"\u00B7",  # MIDDLE DOT
+    0xA9: u"\u266D",  # MUSIC FLAT SIGN
+    0xAA: u"\u00AE",  # REGISTERED SIGN
+    0xAB: u"\u00B1",  # PLUS-MINUS SIGN
+    0xAC: u"\u01A0",  # LATIN CAPITAL LETTER O WITH HORN
+    0xAD: u"\u01AF",  # LATIN CAPITAL LETTER U WITH HORN
+    0xAE: u"\u02BC",  # MODIFIER LETTER APOSTROPHE
+    0xB0: u"\u02BB",  # MODIFIER LETTER TURNED COMMA
+    0xB1: u"\u0142",  # LATIN SMALL LETTER L WITH STROKE
+    0xB2: u"\u00F8",  # LATIN SMALL LETTER O WITH STROKE
+    0xB3: u"\u0111",  # LATIN SMALL LETTER D WITH STROKE
+    0xB4: u"\u00FE",  # LATIN SMALL LETTER THORN
+    0xB5: u"\u00E6",  # LATIN SMALL LETTER AE
+    0xB6: u"\u0153",  # LATIN SMALL LIGATURE OE
+    0xB7: u"\u02BA",  # MODIFIER LETTER DOUBLE PRIME
+    0xB8: u"\u0131",  # LATIN SMALL LETTER DOTLESS I
+    0xB9: u"\u00A3",  # POUND SIGN
+    0xBA: u"\u00F0",  # LATIN SMALL LETTER ETH
+    0xBC: u"\u01A1",  # LATIN SMALL LETTER O WITH HORN
+    0xBD: u"\u01B0",  # LATIN SMALL LETTER U WITH HORN
+    0xC0: u"\u00B0",  # DEGREE SIGN
+    0xC1: u"\u2113",  # SCRIPT SMALL L
+    0xC2: u"\u2117",  # SOUND RECORDING COPYRIGHT
+    0xC3: u"\u00A9",  # COPYRIGHT SIGN
+    0xC4: u"\u266F",  # MUSIC SHARP SIGN
+    0xC5: u"\u00BF",  # INVERTED QUESTION MARK
+    0xC6: u"\u00A1",  # INVERTED EXCLAMATION MARK
 }
 
 ANSEL_TO_UNICODE_MODIFIERS = {
-    b"\xE0": u"\u0309",  # COMBINING HOOK ABOVE
-    b"\xE1": u"\u0300",  # COMBINING GRAVE ACCENT
-    b"\xE2": u"\u0301",  # COMBINING ACUTE ACCENT
-    b"\xE3": u"\u0302",  # COMBINING CIRCUMFLEX ACCENT
-    b"\xE4": u"\u0303",  # COMBINING TILDE
-    b"\xE5": u"\u0304",  # COMBINING MACRON
-    b"\xE6": u"\u0306",  # COMBINING BREVE
-    b"\xE7": u"\u0307",  # COMBINING DOT ABOVE
-    b"\xE8": u"\u0308",  # COMBINING DIAERESIS
-    b"\xE9": u"\u030C",  # COMBINING CARON
-    b"\xEA": u"\u030A",  # COMBINING RING ABOVE
-    b"\xEB": u"\uFE20",  # COMBINING LIGATURE LEFT HALF
-    b"\xEC": u"\uFE21",  # COMBINING LIGATURE RIGHT HALF
-    b"\xED": u"\u0315",  # COMBINING COMMA ABOVE RIGHT
-    b"\xEE": u"\u030B",  # COMBINING DOUBLE ACUTE ACCENT
-    b"\xEF": u"\u0310",  # COMBINING CANDRABINDU
-    b"\xF0": u"\u0327",  # COMBINING CEDILLA
-    b"\xF1": u"\u0328",  # COMBINING OGONEK
-    b"\xF2": u"\u0323",  # COMBINING DOT BELOW
-    b"\xF3": u"\u0324",  # COMBINING DIAERESIS BELOW
-    b"\xF4": u"\u0325",  # COMBINING RING BELOW
-    b"\xF5": u"\u0333",  # COMBINING DOUBLE LOW LINE
-    b"\xF6": u"\u0332",  # COMBINING LOW LINE
-    b"\xF7": u"\u0326",  # COMBINING COMMA BELOW
-    b"\xF8": u"\u031C",  # COMBINING LEFT HALF RING BELOW
-    b"\xF9": u"\u032E",  # COMBINING BREVE BELOW
-    b"\xFA": u"\uFE22",  # COMBINING DOUBLE TILDE LEFT HALF
-    b"\xFB": u"\uFE23",  # COMBINING DOUBLE TILDE RIGHT HALF
-    b"\xFE": u"\u0313",  # COMBINING COMMA ABOVE
+    0xE0: u"\u0309",  # COMBINING HOOK ABOVE
+    0xE1: u"\u0300",  # COMBINING GRAVE ACCENT
+    0xE2: u"\u0301",  # COMBINING ACUTE ACCENT
+    0xE3: u"\u0302",  # COMBINING CIRCUMFLEX ACCENT
+    0xE4: u"\u0303",  # COMBINING TILDE
+    0xE5: u"\u0304",  # COMBINING MACRON
+    0xE6: u"\u0306",  # COMBINING BREVE
+    0xE7: u"\u0307",  # COMBINING DOT ABOVE
+    0xE8: u"\u0308",  # COMBINING DIAERESIS
+    0xE9: u"\u030C",  # COMBINING CARON
+    0xEA: u"\u030A",  # COMBINING RING ABOVE
+    0xEB: u"\uFE20",  # COMBINING LIGATURE LEFT HALF
+    0xEC: u"\uFE21",  # COMBINING LIGATURE RIGHT HALF
+    0xED: u"\u0315",  # COMBINING COMMA ABOVE RIGHT
+    0xEE: u"\u030B",  # COMBINING DOUBLE ACUTE ACCENT
+    0xEF: u"\u0310",  # COMBINING CANDRABINDU
+    0xF0: u"\u0327",  # COMBINING CEDILLA
+    0xF1: u"\u0328",  # COMBINING OGONEK
+    0xF2: u"\u0323",  # COMBINING DOT BELOW
+    0xF3: u"\u0324",  # COMBINING DIAERESIS BELOW
+    0xF4: u"\u0325",  # COMBINING RING BELOW
+    0xF5: u"\u0333",  # COMBINING DOUBLE LOW LINE
+    0xF6: u"\u0332",  # COMBINING LOW LINE
+    0xF7: u"\u0326",  # COMBINING COMMA BELOW
+    0xF8: u"\u031C",  # COMBINING LEFT HALF RING BELOW
+    0xF9: u"\u032E",  # COMBINING BREVE BELOW
+    0xFA: u"\uFE22",  # COMBINING DOUBLE TILDE LEFT HALF
+    0xFB: u"\uFE23",  # COMBINING DOUBLE TILDE RIGHT HALF
+    0xFE: u"\u0313",  # COMBINING COMMA ABOVE
 }
 
 UNICODE_TO_ANSEL = {

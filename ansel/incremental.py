@@ -33,18 +33,23 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
         self.decoded_modifiers = decoded_modifiers
 
     def decode(self, input, final=False):
+        decode_char_map = self.decode_char_map
+        decode_modifier_map = self.decode_modifier_map
+        decoded_modifiers = self.decoded_modifiers
         error_handler = codecs.lookup_error(self.errors)
+
         decoded_chars = []
         for index, item in enumerate(six.iterbytes(input)):
             try:
-                decoded_item = self.decode_char_map[six.int2byte(item)]
+                decoded_item = decode_char_map[item]
                 decoded_chars.append(decoded_item)
-                decoded_chars += self.decoded_modifiers
-                self.decoded_modifiers = []
+                if decoded_modifiers:
+                    decoded_chars += decoded_modifiers
+                    decoded_modifiers = []
             except KeyError:
                 try:
-                    decoded_item = self.decode_modifier_map[six.int2byte(item)]
-                    self.decoded_modifiers.insert(0, decoded_item)
+                    decoded_item = decode_modifier_map[item]
+                    decoded_modifiers.insert(0, decoded_item)
                 except KeyError:
                     decoded_item, _ = error_handler(
                         UnicodeDecodeError(
@@ -56,13 +61,15 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
                         )
                     )
                     decoded_chars.append(decoded_item)
-                    decoded_chars += self.decoded_modifiers
-                    self.decoded_modifiers = []
+                    if decoded_modifiers:
+                        decoded_chars += decoded_modifiers
+                        decoded_modifiers = []
 
-        if final:
-            decoded_chars += self.decoded_modifiers
-            self.decoded_modifiers = []
+        if final and decoded_modifiers:
+            decoded_chars += decoded_modifiers
+            decoded_modifiers = []
 
+        self.decoded_modifiers = decoded_modifiers
         return "".join(decoded_chars)
 
 
@@ -95,16 +102,20 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
         self.current_char = current_char
 
     def encode(self, input, final=False):
+        encode_char_map = self.encode_char_map
+        encode_modifier_map = self.encode_modifier_map
+        current_char = self.current_char
         error_handler = codecs.lookup_error(self.errors)
+
         encoded_chars = []
         for index, item in enumerate(input):
             try:
-                encoded_item = self.encode_char_map[item]
-                encoded_chars += self.current_char
-                self.current_char = [encoded_item]
+                encoded_item = encode_char_map[item]
+                encoded_chars += current_char
+                current_char = [encoded_item]
             except KeyError:
                 try:
-                    self.current_char.insert(0, self.encode_modifier_map[item])
+                    current_char.insert(0, encode_modifier_map[item])
                 except KeyError:
                     try:
                         item, _ = error_handler(
@@ -116,14 +127,17 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
                                 "character maps to <undefined>",
                             )
                         )
+                        self.current_char = current_char
                         encoded_item = self.encode(item)
+                        current_char = self.current_char
                         encoded_chars.append(encoded_item)
                     except UnicodeEncodeError:
-                        self.current_char = []
+                        current_char = []
                         raise
 
         if final:
-            encoded_chars += self.current_char
-            self.current_char = []
+            encoded_chars += current_char
+            current_char = []
 
+        self.current_char = current_char
         return b"".join(encoded_chars)
