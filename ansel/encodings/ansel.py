@@ -2,7 +2,7 @@ import codecs
 
 from .. import codec, incremental
 
-ANSEL_TO_UNICODE = {
+ANSEL_TO_UNICODE_CONTROL = {
     0x00: "\u0000",  # NULL CHARACTER
     0x01: "\u0001",  # START OF HEADING
     0x02: "\u0002",  # START OF TEXT
@@ -35,6 +35,9 @@ ANSEL_TO_UNICODE = {
     0x1D: "\u001D",  # GROUP SEPARATOR
     0x1E: "\u001E",  # RECORD SEPARATOR
     0x1F: "\u001F",  # UNIT SEPARATOR
+}
+
+ANSEL_TO_UNICODE = {
     0x20: "\u0020",  # SPACE
     0x21: "\u0021",  # EXCLAMATION MARK
     0x22: "\u0022",  # QUOTATION MARK
@@ -823,12 +826,14 @@ class Codec(codec.Codec):
     encode_char_map = UNICODE_TO_ANSEL
     encode_modifier_map = UNICODE_TO_ANSEL_MODIFIERS
     decode_char_map = ANSEL_TO_UNICODE
+    decode_control_map = ANSEL_TO_UNICODE_CONTROL
     decode_modifier_map = ANSEL_TO_UNICODE_MODIFIERS
 
 
 class IncrementalDecoder(incremental.IncrementalDecoder):
     name = "ansel"
     decode_char_map = ANSEL_TO_UNICODE
+    decode_control_map = ANSEL_TO_UNICODE_CONTROL
     decode_modifier_map = ANSEL_TO_UNICODE_MODIFIERS
 
 

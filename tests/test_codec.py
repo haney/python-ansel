@@ -11,6 +11,7 @@ class Codec(ansel.codec.Codec):
     decode_char_map = {ord(b"a"): "1", ord(b"b"): "23"}
     encode_modifier_map = {"n": b"5", "o": b"67"}
     decode_modifier_map = {ord(b"n"): "5", ord(b"o"): "67"}
+    decode_control_map = {ord(b"\n"): "8", ord(b"\t"): "9A"}
 
 
 @pytest.mark.parametrize(
@@ -93,9 +94,9 @@ def test_decode_valid(input, expected, expected_len):
 @pytest.mark.parametrize(
     "input, expected, expected_len",
     [
-        (b"n", "5", 1),
-        (b"an", "15", 2),
-        (b"bn", "235", 2),
+        (b"n", " 5", 1),
+        (b"an", "1 5", 2),
+        (b"bn", "23 5", 2),
         (b"na", "15", 2),
         (b"naa", "151", 3),
         (b"noa", "1675", 3),
@@ -103,6 +104,36 @@ def test_decode_valid(input, expected, expected_len):
     ],
 )
 def test_decode_valid_with_modifiers(input, expected, expected_len):
+    codec = Codec()
+    output, output_len = codec.decode(input)
+    assert expected == output
+    assert expected_len == output_len
+
+
+@pytest.mark.parametrize(
+    "input, expected, expected_len",
+    [(b"\n", "8", 1), (b"\t", "9A", 1), (b"\n\t", "89A", 2)],
+)
+def test_decode_valid_with_control(input, expected, expected_len):
+    codec = Codec()
+    output, output_len = codec.decode(input)
+    assert expected == output
+    assert expected_len == output_len
+
+
+@pytest.mark.parametrize(
+    "input, expected, expected_len",
+    [
+        (b"n", " 5", 1),
+        (b"\nn", "8 5", 2),
+        (b"\tn", "9A 5", 2),
+        (b"n\n", " 58", 2),
+        (b"n\n\n", " 588", 3),
+        (b"no\n", " 6758", 3),
+        (b"on\t", " 5679A", 3),
+    ],
+)
+def test_decode_valid_with_control_and_modifiers(input, expected, expected_len):
     codec = Codec()
     output, output_len = codec.decode(input)
     assert expected == output

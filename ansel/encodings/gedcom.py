@@ -3,6 +3,8 @@ import codecs
 from . import ansel
 from .. import codec, incremental
 
+GEDCOM_TO_UNICODE_CONTROL = ansel.ANSEL_TO_UNICODE_CONTROL
+
 GEDCOM_TO_UNICODE = ansel.ANSEL_TO_UNICODE.copy()
 GEDCOM_TO_UNICODE.update(
     {
@@ -40,12 +42,14 @@ class Codec(codec.Codec):
     encode_char_map = UNICODE_TO_GEDCOM
     encode_modifier_map = UNICODE_TO_GEDCOM_MODIFIERS
     decode_char_map = GEDCOM_TO_UNICODE
+    decode_control_map = GEDCOM_TO_UNICODE_CONTROL
     decode_modifier_map = GEDCOM_TO_UNICODE_MODIFIERS
 
 
 class IncrementalDecoder(incremental.IncrementalDecoder):
     name = "gedcom"
     decode_char_map = GEDCOM_TO_UNICODE
+    decode_control_map = GEDCOM_TO_UNICODE_CONTROL
     decode_modifier_map = GEDCOM_TO_UNICODE_MODIFIERS
 
 
