@@ -1,5 +1,5 @@
 Sphinx==1.8.2
-bumpversion==0.5.3
+bumpversion==0.6.0
 coverage==4.5.2
 flake8==3.8.4; python_version == "3.4"
 flake8==3.9.2; python_version != "3.4"
