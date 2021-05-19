@@ -6,7 +6,7 @@ pip==18.1
 pyfakefs==3.5.3
 pytest-runner==4.2
 pytest==3.8.2
-sphinx-rtd-theme==0.4.2
+sphinx-rtd-theme==0.5.2
 tox==3.5.3
 twine==1.12.1
 wheel==0.32.3
