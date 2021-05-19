@@ -4,6 +4,7 @@ import codecs
 class IncrementalDecoder(codecs.IncrementalDecoder):
     name = None
     decode_char_map = {}
+    decode_control_map = {}
     decode_modifier_map = {}
 
     def __init__(self, errors="strict"):
@@ -32,6 +33,7 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
 
     def decode(self, input, final=False):
         decode_char_map = self.decode_char_map
+        decode_control_map = self.decode_control_map
         decode_modifier_map = self.decode_modifier_map
         decoded_modifiers = self.decoded_modifiers
         error_handler = codecs.lookup_error(self.errors)
@@ -46,24 +48,33 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
                     decoded_modifiers = []
             except KeyError:
                 try:
-                    decoded_item = decode_modifier_map[item]
-                    decoded_modifiers.insert(0, decoded_item)
-                except KeyError:
-                    decoded_item, _ = error_handler(
-                        UnicodeDecodeError(
-                            self.name,
-                            input,
-                            index,
-                            index + 1,
-                            "character maps to <undefined>",
-                        )
-                    )
-                    decoded_chars.append(decoded_item)
+                    decoded_item = decode_control_map[item]
                     if decoded_modifiers:
+                        decoded_chars.append(" ")
                         decoded_chars += decoded_modifiers
                         decoded_modifiers = []
+                    decoded_chars.append(decoded_item)
+                except KeyError:
+                    try:
+                        decoded_item = decode_modifier_map[item]
+                        decoded_modifiers.insert(0, decoded_item)
+                    except KeyError:
+                        decoded_item, _ = error_handler(
+                            UnicodeDecodeError(
+                                self.name,
+                                input,
+                                index,
+                                index + 1,
+                                "character maps to <undefined>",
+                            )
+                        )
+                        decoded_chars.append(decoded_item)
+                        if decoded_modifiers:
+                            decoded_chars += decoded_modifiers
+                            decoded_modifiers = []
 
         if final and decoded_modifiers:
+            decoded_chars.append(" ")
             decoded_chars += decoded_modifiers
             decoded_modifiers = []
 
