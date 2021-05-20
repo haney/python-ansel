@@ -7,15 +7,15 @@ from .conftest import EncodingError
 
 class Codec(ansel.codec.Codec):
     name = "test"
-    encode_char_map = {u"a": b"1", u"b": b"23", u"?": b"?"}
-    decode_char_map = {ord(b"a"): u"1", ord(b"b"): u"23"}
-    encode_modifier_map = {u"n": b"5", u"o": b"67"}
-    decode_modifier_map = {ord(b"n"): u"5", ord(b"o"): u"67"}
+    encode_char_map = {"a": b"1", "b": b"23", "?": b"?"}
+    decode_char_map = {ord(b"a"): "1", ord(b"b"): "23"}
+    encode_modifier_map = {"n": b"5", "o": b"67"}
+    decode_modifier_map = {ord(b"n"): "5", ord(b"o"): "67"}
 
 
 @pytest.mark.parametrize(
     "input, expected, expected_len",
-    [(u"", b"", 0), (u"a", b"1", 1), (u"b", b"23", 1), (u"ab", b"123", 2)],
+    [("", b"", 0), ("a", b"1", 1), ("b", b"23", 1), ("ab", b"123", 2)],
 )
 def test_encode_valid(input, expected, expected_len):
     codec = Codec()
@@ -27,13 +27,13 @@ def test_encode_valid(input, expected, expected_len):
 @pytest.mark.parametrize(
     "input, expected, expected_len",
     [
-        (u"n", b"5", 1),
-        (u"na", b"51", 2),
-        (u"nb", b"523", 2),
-        (u"an", b"51", 2),
-        (u"aan", b"151", 3),
-        (u"ano", b"6751", 3),
-        (u"bon", b"56723", 3),
+        ("n", b"5", 1),
+        ("na", b"51", 2),
+        ("nb", b"523", 2),
+        ("an", b"51", 2),
+        ("aan", b"151", 3),
+        ("ano", b"6751", 3),
+        ("bon", b"56723", 3),
     ],
 )
 def test_encode_valid_with_modifiers(input, expected, expected_len):
@@ -46,8 +46,8 @@ def test_encode_valid_with_modifiers(input, expected, expected_len):
 @pytest.mark.parametrize(
     "input, start, end, reason",
     [
-        (u"+", 0, 1, "character maps to <undefined>"),
-        (u"ab+", 2, 3, "character maps to <undefined>"),
+        ("+", 0, 1, "character maps to <undefined>"),
+        ("ab+", 2, 3, "character maps to <undefined>"),
     ],
 )
 def test_encode_invalid(input, start, end, reason):
@@ -61,7 +61,7 @@ def test_encode_invalid(input, start, end, reason):
     assert end == exc_info.value.end
 
 
-@pytest.mark.parametrize("input", [u"+"])
+@pytest.mark.parametrize("input", ["+"])
 def test_encode_invalid_raising_error_handler(error_handler, input):
     codec = Codec()
     with pytest.raises(EncodingError):
@@ -70,7 +70,7 @@ def test_encode_invalid_raising_error_handler(error_handler, input):
 
 @pytest.mark.parametrize(
     "input, expected, expected_len",
-    [(u"+", b"?", 1), (u"a+b", b"1?23", 3), (u"a+n", b"15?", 3)],
+    [("+", b"?", 1), ("a+b", b"1?23", 3), ("a+n", b"15?", 3)],
 )
 def test_encode_invalid_with_replacement(input, expected, expected_len):
     codec = Codec()
@@ -81,7 +81,7 @@ def test_encode_invalid_with_replacement(input, expected, expected_len):
 
 @pytest.mark.parametrize(
     "input, expected, expected_len",
-    [(b"", u"", 0), (b"a", u"1", 1), (b"b", u"23", 1), (b"ab", u"123", 2)],
+    [(b"", "", 0), (b"a", "1", 1), (b"b", "23", 1), (b"ab", "123", 2)],
 )
 def test_decode_valid(input, expected, expected_len):
     codec = Codec()
@@ -93,13 +93,13 @@ def test_decode_valid(input, expected, expected_len):
 @pytest.mark.parametrize(
     "input, expected, expected_len",
     [
-        (b"n", u"5", 1),
-        (b"an", u"15", 2),
-        (b"bn", u"235", 2),
-        (b"na", u"15", 2),
-        (b"naa", u"151", 3),
-        (b"noa", u"1675", 3),
-        (b"onb", u"23567", 3),
+        (b"n", "5", 1),
+        (b"an", "15", 2),
+        (b"bn", "235", 2),
+        (b"na", "15", 2),
+        (b"naa", "151", 3),
+        (b"noa", "1675", 3),
+        (b"onb", "23567", 3),
     ],
 )
 def test_decode_valid_with_modifiers(input, expected, expected_len):
@@ -136,7 +136,7 @@ def test_decode_invalid_raising_error_handler(error_handler, input):
 
 @pytest.mark.parametrize(
     "input, expected, expected_len",
-    [(b"+", u"\uFFFD", 1), (b"a+b", u"1\uFFFD23", 3), (b"an+", u"1\uFFFD5", 3)],
+    [(b"+", "\uFFFD", 1), (b"a+b", "1\uFFFD23", 3), (b"an+", "1\uFFFD5", 3)],
 )
 def test_decode_invalid_with_replacement(input, expected, expected_len):
     codec = Codec()

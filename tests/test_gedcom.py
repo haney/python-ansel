@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """Tests for `gedcom` package."""
 
@@ -17,20 +16,20 @@ def test_lookup(register):
 @pytest.mark.parametrize(
     "input, expected",
     [
-        (b"", u""),
-        (b"abc", u"abc"),
+        (b"", ""),
+        (b"abc", "abc"),
         pytest.param(
             b"P\xEAal",
-            u"Pa\u030Al",
+            "Pa\u030Al",
             marks=pytest.mark.xfail(
                 reason="Incremental reads not supported through stream interface"
             ),
         ),
-        (b"\xBE", u"\u25A1"),
-        (b"\xBF", u"\u25A0"),
-        (b"\xCD", u"\u0065"),
-        (b"\xCE", u"\u006F"),
-        (b"\xCF", u"\u00DF"),
+        (b"\xBE", "\u25A1"),
+        (b"\xBF", "\u25A0"),
+        (b"\xCD", "\u0065"),
+        (b"\xCE", "\u006F"),
+        (b"\xCF", "\u00DF"),
     ],
 )
 def test_decode(register, fs, input, expected):
@@ -49,22 +48,22 @@ def test_decode(register, fs, input, expected):
 @pytest.mark.parametrize(
     "input_parts, expected",
     [
-        ([u""], b""),
-        ([u"abc"], b"abc"),
-        ([u"Pa\u030Al"], b"P\xEAal"),
-        ([u"P", u"a\u030A", u"l"], b"P\xEAal"),
+        ([""], b""),
+        (["abc"], b"abc"),
+        (["Pa\u030Al"], b"P\xEAal"),
+        (["P", "a\u030A", "l"], b"P\xEAal"),
         pytest.param(
-            [u"P", u"a", u"\u030A", u"l"],
+            ["P", "a", "\u030A", "l"],
             b"P\xEAal",
             marks=pytest.mark.xfail(
                 reason="Incremental writes not supported through stream interface"
             ),
         ),
-        (u"\u25A1", b"\xBE"),
-        (u"\u25A0", b"\xBF"),
-        (u"\u0065", b"\x65"),
-        (u"\u006F", b"\x6F"),
-        (u"\u00DF", b"\xCF"),
+        ("\u25A1", b"\xBE"),
+        ("\u25A0", b"\xBF"),
+        ("\u0065", b"\x65"),
+        ("\u006F", b"\x6F"),
+        ("\u00DF", b"\xCF"),
     ],
 )
 def test_encode(register, fs, input_parts, expected):

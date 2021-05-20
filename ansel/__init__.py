@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Top-level package for ANSEL Codecs."""
 
 __author__ = """David Haney"""

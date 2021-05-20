@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """Tests for `ansel` package."""
 
@@ -17,11 +16,11 @@ def test_lookup(register):
 @pytest.mark.parametrize(
     "input, expected",
     [
-        (b"", u""),
-        (b"abc", u"abc"),
+        (b"", ""),
+        (b"abc", "abc"),
         pytest.param(
             b"P\xEAal",
-            u"Pa\u030Al",
+            "Pa\u030Al",
             marks=pytest.mark.xfail(
                 reason="Incremental reads not supported through stream interface"
             ),
@@ -44,12 +43,12 @@ def test_decode(register, fs, input, expected):
 @pytest.mark.parametrize(
     "input_parts, expected",
     [
-        ([u""], b""),
-        ([u"abc"], b"abc"),
-        ([u"Pa\u030Al"], b"P\xEAal"),
-        ([u"P", u"a\u030A", u"l"], b"P\xEAal"),
+        ([""], b""),
+        (["abc"], b"abc"),
+        (["Pa\u030Al"], b"P\xEAal"),
+        (["P", "a\u030A", "l"], b"P\xEAal"),
         pytest.param(
-            [u"P", u"a", u"\u030A", u"l"],
+            ["P", "a", "\u030A", "l"],
             b"P\xEAal",
             marks=pytest.mark.xfail(
                 reason="Incremental writes not supported through stream interface"
