@@ -1,7 +1,5 @@
 import codecs
 
-import six
-
 
 class IncrementalDecoder(codecs.IncrementalDecoder):
     name = None
@@ -9,7 +7,7 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
     decode_modifier_map = {}
 
     def __init__(self, errors="strict"):
-        super(IncrementalDecoder, self).__init__(errors)
+        super().__init__(errors)
         self.decoded_modifiers = []
 
     def getstate(self):
@@ -39,7 +37,7 @@ class IncrementalDecoder(codecs.IncrementalDecoder):
         error_handler = codecs.lookup_error(self.errors)
 
         decoded_chars = []
-        for index, item in enumerate(six.iterbytes(input)):
+        for index, item in enumerate(iter(input)):
             try:
                 decoded_item = decode_char_map[item]
                 decoded_chars.append(decoded_item)
@@ -79,7 +77,7 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
     encode_modifier_map = {}
 
     def __init__(self, errors="strict"):
-        super(IncrementalEncoder, self).__init__(errors)
+        super().__init__(errors)
         self.current_char = []
 
     def getstate(self):
@@ -87,7 +85,7 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
             return 0
         state = 1
         for item in self.current_char:
-            for byte in six.iterbytes(item):
+            for byte in iter(item):
                 state <<= 8
                 state += byte
         return state
@@ -97,7 +95,7 @@ class IncrementalEncoder(codecs.IncrementalEncoder):
         while state > 1:
             byte = state & 0xFF
             state >>= 8
-            current_char.append(six.int2byte(byte))
+            current_char.append(bytes((byte,)))
         current_char.reverse()
         self.current_char = current_char
 
