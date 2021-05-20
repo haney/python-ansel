@@ -2,8 +2,8 @@
 History
 =======
 
-0.2.0 (TBD)
------------
+0.2.0 (2021-05-20)
+------------------
 
 * Improve encoding (~50%) and decoding (~25%) performance.
 * Fix handling of combining characters that occur at the end of a file or before
