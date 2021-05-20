@@ -30,7 +30,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
     ],
     description="Codecs for reading/writing documents in the ANSEL character set.",
     install_requires=requirements,
