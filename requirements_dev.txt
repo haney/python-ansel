@@ -5,7 +5,7 @@ Babel==2.9.1
 black==21.5b1
 bleach==3.3.0
 bump2version==1.0.1
-certifi==2020.12.5
+certifi==2021.5.30
 chardet==4.0.0
 click==8.0.1
 colorama==0.4.4
@@ -24,7 +24,7 @@ MarkupSafe==2.0.1
 mccabe==0.6.1
 mypy-extensions==0.4.3
 packaging==20.9
-pathspec==0.8.1
+pathspec==0.9.0
 pkginfo==1.7.0
 pluggy==0.13.1
 py==1.10.0
@@ -52,10 +52,10 @@ sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 toml==0.10.2
-tox==3.23.1
+tox==3.24.0
 tqdm==4.60.0
 twine==3.4.2
 urllib3==1.26.6
-virtualenv==20.4.6
+virtualenv==20.6.0
 webencodings==0.5.1
 zipp==3.4.1
