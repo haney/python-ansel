@@ -18,7 +18,7 @@ idna==2.10
 imagesize==1.2.0
 importlib-metadata==4.0.1
 iniconfig==1.1.1
-Jinja2==2.11.3
+Jinja2==3.0.1
 keyring==23.0.1
 MarkupSafe==2.0.1
 mccabe==0.6.1
