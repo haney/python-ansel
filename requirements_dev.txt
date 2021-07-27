@@ -3,7 +3,7 @@ appdirs==1.4.4
 attrs==21.2.0
 Babel==2.9.1
 black==21.5b1
-bleach==3.3.0
+bleach==3.3.1
 bump2version==1.0.1
 certifi==2021.5.30
 chardet==4.0.0
@@ -16,7 +16,7 @@ filelock==3.0.12
 flake8==3.9.2
 idna==2.10
 imagesize==1.2.0
-importlib-metadata==4.0.1
+importlib-metadata==4.6.1
 iniconfig==1.1.1
 Jinja2==3.0.1
 keyring==23.0.1
@@ -53,9 +53,9 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 toml==0.10.2
 tox==3.24.0
-tqdm==4.60.0
+tqdm==4.61.2
 twine==3.4.2
 urllib3==1.26.6
 virtualenv==20.6.0
 webencodings==0.5.1
-zipp==3.4.1
+zipp==3.5.0
