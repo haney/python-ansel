@@ -7,12 +7,12 @@ bleach==4.1.0
 bump2version==1.0.1
 certifi==2021.5.30
 chardet==4.0.0
-click==8.0.1
+click==8.0.3
 colorama==0.4.4
 coverage==5.5
 distlib==0.3.3
 docutils==0.16
-filelock==3.0.12
+filelock==3.3.2
 flake8==3.9.2
 idna==3.2
 imagesize==1.2.0
