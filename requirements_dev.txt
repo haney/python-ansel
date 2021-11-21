@@ -11,7 +11,7 @@ click==8.0.3
 colorama==0.4.4
 coverage==6.1.2
 distlib==0.3.3
-docutils==0.16
+docutils==0.18
 filelock==3.4.0
 flake8==4.0.1
 idna==3.3
