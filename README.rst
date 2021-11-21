@@ -5,9 +5,11 @@ ANSEL Codecs
 
 .. image:: https://img.shields.io/pypi/v/ansel.svg
         :target: https://pypi.python.org/pypi/ansel
+        :alt: PyPI Status
 
-.. image:: https://img.shields.io/travis/haney/python-ansel.svg
+.. image:: https://github.com/haney/python-ansel/actions/workflows/build.yml/badge.svg
         :target: https://travis-ci.org/haney/python-ansel
+        :alt: Build Status
 
 .. image:: https://readthedocs.org/projects/python-ansel/badge/?version=latest
         :target: https://python-ansel.readthedocs.io/en/latest/?badge=latest
