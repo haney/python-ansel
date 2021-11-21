@@ -15,11 +15,11 @@ docutils==0.16
 filelock==3.3.2
 flake8==4.0.1
 idna==3.3
-imagesize==1.2.0
+imagesize==1.3.0
 importlib-metadata==4.2; python_version < "3.8"
 importlib-metadata==4.8.1; python_version >= "3.8"
 iniconfig==1.1.1
-Jinja2==3.0.2
+Jinja2==3.0.3
 keyring==23.2.1
 MarkupSafe==2.0.1
 mccabe==0.6.1
@@ -28,7 +28,7 @@ packaging==21.3
 pathspec==0.9.0
 pkginfo==1.7.1
 pluggy==1.0.0
-py==1.10.0
+py==1.11.0
 pycodestyle==2.8.0
 pyfakefs==4.5.1
 pyflakes==2.4.0
@@ -43,7 +43,7 @@ requests-toolbelt==0.9.1
 rfc3986==1.5.0
 six==1.16.0
 snowballstemmer==2.1.0
-Sphinx==4.2.0
+Sphinx==4.3.0
 sphinx-rtd-theme==1.0.0
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
