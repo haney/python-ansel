@@ -70,7 +70,7 @@ toml==0.10.2
 tomli==1.2.3; python_version < "3.7"
 tomli==2.0.1; python_version >= "3.7"
 tox==3.25.0
-tqdm==4.62.3
+tqdm==4.64.0
 twine==3.7.1
 typing_extensions==4.1.1; python_version < "3.7"
 typing_extensions==4.2.0; python_version >= "3.7"
