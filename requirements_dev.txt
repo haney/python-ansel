@@ -57,7 +57,8 @@ rfc3986==1.5.0; python_version < "3.7"
 rfc3986==2.0.0; python_version >= "3.7"
 six==1.16.0
 snowballstemmer==2.2.0
-Sphinx==4.3.2
+Sphinx==4.3.2; python_version < "3.8"
+Sphinx==5.0.1; python_version >= "3.8"
 sphinx-rtd-theme==0.5.2
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
