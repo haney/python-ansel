@@ -50,7 +50,7 @@ pytest==7.1.2; python_version >= "3.7"
 pytz==2022.1
 readme-renderer==34.0; python_version < "3.7"
 readme-renderer==35.0; python_version >= "3.7"
-regex==2021.11.10
+regex==2022.6.2
 requests==2.27.1
 requests-toolbelt==0.9.1
 rfc3986==1.5.0
