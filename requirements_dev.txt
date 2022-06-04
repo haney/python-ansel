@@ -77,7 +77,7 @@ twine==3.8.0; python_version < "3.7"
 twine==4.0.1; python_version >= "3.7"
 typing_extensions==4.1.1; python_version < "3.7"
 typing_extensions==4.2.0; python_version >= "3.7"
-urllib3==1.26.8
+urllib3==1.26.9
 virtualenv==20.10.0
 webencodings==0.5.1
 zipp==3.6.0
