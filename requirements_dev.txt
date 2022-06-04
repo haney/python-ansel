@@ -48,7 +48,8 @@ pyparsing==3.0.9
 pytest==7.0.1; python_version < "3.7"
 pytest==7.1.2; python_version >= "3.7"
 pytz==2022.1
-readme-renderer==32.0
+readme-renderer==34.0; python_version < "3.7"
+readme-renderer==35.0; python_version >= "3.7"
 regex==2021.11.10
 requests==2.27.1
 requests-toolbelt==0.9.1
