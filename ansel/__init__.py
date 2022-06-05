@@ -2,7 +2,7 @@
 
 __author__ = """David Haney"""
 __email__ = "david.haney@gmail.com"
-__version__ = "0.2.0"
+__version__ = "1.0.0"
 
 
 import codecs
