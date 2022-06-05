@@ -23,10 +23,11 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: poetry install
-      - name: Lint with flake8
+      - name: Analyze
         run: |
           poetry run flake8 . --count --statistics
           poetry run black --check .
+          poetry run isort --check .
   
   docs:
     runs-on: ubuntu-latest

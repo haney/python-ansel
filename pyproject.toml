@@ -27,6 +27,7 @@ pyfakefs = "^4.5.6"
 pytest = "^7"
 Sphinx = {version = "^4.3.2"}
 sphinx-rtd-theme = {version = "<1"}
+isort = "^5.10.1"
 
 [tool.poetry.extras]
 docs = ["Sphinx", "shpinx-rtd-theme"]
