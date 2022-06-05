@@ -28,6 +28,15 @@ jobs:
         run: |
           flake8 . --count --statistics
           black --check .
+  
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ammaraskar/sphinx-action@master
+        with:
+          pre-build-command: "pip install -r requirements_dev.txt"
+
   build:
     needs: static-analysis
     runs-on: ${{ matrix.os }}
