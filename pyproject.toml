@@ -19,18 +19,18 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
+Sphinx = { version = "*", optional = true }
+sphinx-rtd-theme = { version = "<1", optional = true }
 
 [tool.poetry.dev-dependencies]
-black = "^22.3.0"
-flake8 = "^4.0.1"
-pyfakefs = "^4.5.6"
-pytest = "^7"
-Sphinx = {version = "^4.3.2"}
-sphinx-rtd-theme = {version = "<1"}
-isort = "^5.10.1"
+black = { version = "*", python = ">=3.7" }
+flake8 = { version = "*", python = ">=3.7" }
+isort = { version = "*", python = ">=3.7" }
+pyfakefs = "*"
+pytest = "*"
 
 [tool.poetry.extras]
-docs = ["Sphinx", "shpinx-rtd-theme"]
+docs = ["Sphinx", "sphinx-rtd-theme"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
