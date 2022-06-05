@@ -2,6 +2,13 @@
 History
 =======
 
+1.0.0 (2022-06-05)
+------------------
+
+* Switch to Poetry package management.
+* Add Python 3.10 and PyPy 3.6-3.9 testing.
+* Migrate test infrastructure to Github Actions.
+
 0.2.0 (2021-05-20)
 ------------------
 
