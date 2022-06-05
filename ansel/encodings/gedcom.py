@@ -1,7 +1,7 @@
 import codecs
 
-from . import ansel
 from .. import codec, incremental
+from . import ansel
 
 GEDCOM_TO_UNICODE_CONTROL = ansel.ANSEL_TO_UNICODE_CONTROL
 
