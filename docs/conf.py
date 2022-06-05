@@ -48,9 +48,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"ANSEL Codecs"
-copyright = u"2018, David Haney"
-author = u"David Haney"
+project = "ANSEL Codecs"
+copyright = "2018, David Haney"
+author = "David Haney"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "ansel.tex", u"ANSEL Codecs Documentation", u"David Haney", "manual")
+    (master_doc, "ansel.tex", "ANSEL Codecs Documentation", "David Haney", "manual")
 ]
 
 
@@ -136,7 +136,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "ansel", u"ANSEL Codecs Documentation", [author], 1)]
+man_pages = [(master_doc, "ansel", "ANSEL Codecs Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -148,7 +148,7 @@ texinfo_documents = [
     (
         master_doc,
         "ansel",
-        u"ANSEL Codecs Documentation",
+        "ANSEL Codecs Documentation",
         author,
         "ansel",
         "One line description of project.",
