@@ -28,7 +28,7 @@ Codecs for reading/writing documents in the ANSEL character set.
 Features
 --------
 
-* Adds support for new encodings ANSEL_ (ANSI/NISO Z39.47) and GEDCOM_.
+* Adds support for character set encodings ANSEL_ (ANSI/NISO Z39.47) and GEDCOM_.
 * Re-orders combining characters for consistency with the ANSEL specification.
 
 Credits
